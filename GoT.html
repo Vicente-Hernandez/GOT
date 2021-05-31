@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="https://img.icons8.com/windows/452/game-of-thrones.png">
+    <title>GoT | API</title>
+    <style>
+        body {
+            background-image: url("http://img8.uploadhouse.com/fileuploads/17877/178776792c953d5ca22068b8c4f79501dcb9e5f3.jpg");
+            background-size: cover;
+        }
+        .col-3 {
+            height: 350px;
+            width: 350px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <nav class="navbar navbar-light bg-light mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="https://img.icons8.com/windows/452/game-of-thrones.png" alt="" width="30" height="30"
+                        class="d-inline-block align-text-top mx-5">
+                    Game of Thrones
+                </a>
+            </div>
+        </nav>
+        <div id="row" class="mb-3">
+            <div type="button" data-id="229" class="click col-3 d-inline-block mx-2 opacity-0"></div>
+            <div type="button" data-id="17" class="click col-3 d-inline-block mx-2"></div>
+            <div type="button" data-id="378" class="click col-3 d-inline-block mx-2"></div>
+            <div type="button" data-id="362" class="click col-3 d-inline-block mx-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-6 mt-5 offset-md-3 bg-light border border-primary rounded-3">
+                <div>
+                    <h5>Nombre:
+                        <span id="name"></span>
+                    </h5>
+                    <p>Lema:
+                        <span id="words"></span>
+                    </p>
+                </div>
+                <div>
+                    <ul id="titulos">
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(".click").on('click', function () {
+        const house = $(this).attr("data-id");
+        console.log(house);
+        let info = {};
+        $.get('https://anapioficeandfire.com/api/houses/' + house, function (data) {
+            info = data;
+            console.log(info);
+            $('#name').html(info.name);
+            let x = (info.name);
+            console.log(x);
+            $('#words').html(info.coatOfArms);
+            let titulos = info.titles.map(title => `<li>${title}</li>`).join('');
+            console.log(titulos);
+            $('#titulos').html(info.titles.map(title => `<li>${title}</li>`).join(''));
+        }, 'json');
+        // let personas = {};
+        // for (let i = 1; i < 1000; i++) {
+        //     $.get('https://anapioficeandfire.com/api/characters/' + i, function (personaje) {
+        //         personas = personaje;
+        //         console.log(personaje);
+        //     }); 
+        // obtener la data de las casas ¬¬
+        //
+    });
+</script>
+
+</html>
